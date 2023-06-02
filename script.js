@@ -44,6 +44,7 @@ const dom = {
         totalQuestions: document.getElementById('total-questions'),
     },
     question: document.getElementById('question'),
+    title: document.getElementById('title'),
     answers: document.getElementById('answers'),
     next: document.getElementById('next'),
     result: {
@@ -52,14 +53,13 @@ const dom = {
         count: document.getElementById('result-total-questions'),
     }
 }
-console.log(dom.result)
 
 let questionsCount = data.questions.length;
 let step = 0;
 let validAnswersCount = 0;
 
 dom.next.onclick = () => {
-    step = step < questionsCount - 1 ? step + 1 : step;
+    step = step < questionsCount ? step + 1 : step;
     renderQuiz(questionsCount, step);
 
 }
@@ -115,6 +115,7 @@ dom.answers.onclick = (event) => {
             : 'quiz__answer_invalid'
         target.classList.add(answerClass)
         isDisableButton(false)
+        validAnswersCount = isValid ? validAnswersCount + 1 : validAnswersCount
     }
 }
 
@@ -140,5 +141,12 @@ function changeButtonOnResult() {
 }
 
 function renderResults() {
-    dom.answers.style.display='none'
+    dom.answers.style.display = 'none'
+    dom.question.style.display = 'none'
+    dom.title.style.display = 'none'
+    dom.next.innerText = 'Again'
+    dom.result.resultBlock.style.display = 'block'
+    dom.result.validAnswers.innerHTML = validAnswersCount
+    dom.result.count.innerHTML = questionsCount
+    
 }

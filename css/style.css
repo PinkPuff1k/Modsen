@@ -30,6 +30,16 @@ body {
     font-size: 18px;
 }
 
+.quiz__result-title{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.quiz__result-info{
+    font-size: 18px;
+    padding: 40px;
+}
+
 .quiz__answers {
     display: flex;
     flex-wrap: wrap;
@@ -83,4 +93,8 @@ body {
 .quiz__btn_disable{
     opacity: 0.5;
     pointer-events: none;
+}
+
+.quiz__result{
+    display: none;
 }
