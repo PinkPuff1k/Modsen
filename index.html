@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,13 +8,24 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>Quiz</title>
 </head>
-<body>
-    <div class="box">
-        <div class="box_title"><h1>Question #</h1></div>
-        <span class="box__text">How many planets are in the solar system?</span>
-        <div class="box_list">
 
+<body>
+    <div class="quiz">
+        <div class="quiz__title">
+            <h2>Question number <span id="question-number">1</span>/<span id="total-questions">7</span></h2> 
         </div>
+        <div class="quiz__question">
+            <span id="question">How many planets are in the solar system?</span>
+        </div>
+        <div class="quiz__answers" id="answers">
+            <div class="quiz__answer quiz__answer_valid">v1</div>
+            <div class="quiz__answer">v2</div>
+            <div class="quiz__answer quiz__answer_invalid">v3</div>
+            <div class="quiz__answer">v4</div>
+        </div>
+        <button class="quiz__btn" id="next">Next question</button>
     </div>
+    <script src="./script.js"></script>
 </body>
+
 </html>
