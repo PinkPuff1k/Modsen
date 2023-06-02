@@ -12,7 +12,7 @@
 <body>
     <div class="quiz">
         <div class="quiz__title">
-            <h2>Question number <span id="question-number">1</span>/<span id="total-questions">7</span></h2> 
+            <h2>Question number <span id="question-number">1</span>/<span id="total-questions">5</span></h2>
         </div>
         <div class="quiz__question">
             <span id="question">How many planets are in the solar system?</span>
@@ -24,6 +24,15 @@
             <div class="quiz__answer">v4</div>
         </div>
         <button class="quiz__btn" id="next">Next question</button>
+        <div class="quiz__result" id="result">
+            <div class="quiz__result-title">Result</div>
+            <div class="quiz__result-info">
+                <span>Correct answers: </span>
+                <span id="valid-answers">0</span>
+                <span>/</span>
+                <span id="result-total-questions">5</span>
+            </div>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>

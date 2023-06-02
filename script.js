@@ -5,35 +5,35 @@ const data = {
             answers: [
                 '8', '9', '10', '11',
             ],
-            validAnswer: 1
+            validAnswer: '8'
         },
         {
             question: 'What is the freezing point of water?',
             answers: [
                 '-6', '-5', '0', '1',
             ],
-            validAnswer: 3
+            validAnswer: '0'
         },
         {
             question: 'What is the longest river in the world?',
             answers: [
                 'Nile', 'Amazon', 'Yangtze', 'Thames'
             ],
-            validAnswer: 1
+            validAnswer: 'Nile'
         },
         {
             question: 'How many chromosomes are in the human genome?',
             answers: [
                 '42', '44', '46', '47'
             ],
-            validAnswer: 4
+            validAnswer: '46'
         },
         {
             question: 'What is the capital of Canada?',
             answers: [
                 'Toronto', 'Ottawa', 'Vancouver', 'Calgary'
             ],
-            validAnswer: 2
+            validAnswer: 'Ottawa'
         },
     ]
 }
@@ -46,25 +46,39 @@ const dom = {
     question: document.getElementById('question'),
     answers: document.getElementById('answers'),
     next: document.getElementById('next'),
+    result: {
+        resultBlock: document.getElementById('result'),
+        validAnswers: document.getElementById('valid-answers'),
+        count: document.getElementById('result-total-questions'),
+    }
 }
+console.log(dom.result)
 
 let questionsCount = data.questions.length;
 let step = 0;
+let validAnswersCount = 0;
 
 dom.next.onclick = () => {
-    step = step < questionsCount ? step + 1 : step;
+    step = step < questionsCount - 1 ? step + 1 : step;
     renderQuiz(questionsCount, step);
 
 }
 
 function renderQuiz(total, step) {
     render(total, step);
+    if (step + 1 == total) {
+        changeButtonOnResult()
+    }
     if (step < total) {
         const answers = data.questions[step].answers;
         const answersHtml = buildAnswers(answers);
         renderQuestion();
         renderAnswers(answersHtml)
-    };
+        isDisableButton(true)
+    } else if (step == total) {
+        renderResults();
+    }
+
 }
 renderQuiz(questionsCount, step)
 
@@ -80,7 +94,7 @@ function renderQuestion() {
 function buildAnswers(answers) {
     const answersHTML = [];
     answers.forEach((answer, idx) => {
-        const html = `<div class="quiz__answer" data-id ${idx+1}>${answer}</div>`;
+        const html = `<div class="quiz__answer" data-id ${idx + 1}>${answer}</div>`;
         answersHTML.push(html);
     });
     return answersHTML.join('');
@@ -92,14 +106,39 @@ function renderAnswers(htmlString) {
 }
 
 dom.answers.onclick = (event) => {
-    const target = event.target;
-    if (target.classList.contains('quiz__answer')) {
-        const answerNumber = target.id;
-        console.log(answerNumber);
+    const target = event.target
+    if (target.classList.contains("quiz__answer")) {
+        const answerNumber = target.textContent;
+        const isValid = checkAnswer(step, answerNumber);
+        const answerClass = isValid
+            ? 'quiz__answer_valid'
+            : 'quiz__answer_invalid'
+        target.classList.add(answerClass)
+        isDisableButton(false)
     }
 }
 
-function checkAnswer(step, answerId) {
-    const validAnswerId = data.questions[step].validAnswer;
-    return validAnswerId == answerId
+function checkAnswer(step, answer) {
+    const validAnswer = data.questions[step].validAnswer;
+    return validAnswer == answer
+}
+
+
+
+function isDisableButton(isDisable) {
+    if (isDisable) {
+        dom.next.classList.add('quiz__btn_disable')
+    } else {
+        dom.next.classList.remove('quiz__btn_disable')
+    }
+}
+
+
+function changeButtonOnResult() {
+    dom.next.innerText = 'Result'
+    dom.next.dataset.result = 'result'
+}
+
+function renderResults() {
+    dom.answers.style.display='none'
 }
